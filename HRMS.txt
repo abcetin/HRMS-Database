@@ -1,0 +1,93 @@
+BEGIN;
+
+
+CREATE TABLE public."Activation"
+(
+    "Id" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999999999 CACHE 999999999 ),
+    "UserId" integer NOT NULL,
+    "Activated" boolean NOT NULL,
+    PRIMARY KEY ("Id")
+);
+
+CREATE TABLE public."Employer"
+(
+    "UserId" integer NOT NULL,
+    "CompanyName" character varying(50),
+    "WebSite" character varying(50),
+    "Email" character varying(50),
+    "PhoneNumber" character varying(50),
+    PRIMARY KEY ("UserId")
+);
+
+CREATE TABLE public."JobPosition"
+(
+    "Id" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999999999 CACHE 999999999 ),
+    "PositionName" character varying(50) NOT NULL,
+    PRIMARY KEY ("Id")
+);
+
+CREATE TABLE public."JobSeeker"
+(
+    "UserId" integer NOT NULL,
+    "FirstName" character varying(50) NOT NULL,
+    "LastName" character varying(50) NOT NULL,
+    "NationalityId" character varying(11) NOT NULL,
+    "DateOfBird" date NOT NULL,
+    PRIMARY KEY ("UserId")
+);
+
+CREATE TABLE public."SystemPersonel"
+(
+    "UserId" integer NOT NULL,
+    "FirsName" character varying(50) NOT NULL,
+    "LastName" character varying(50) NOT NULL,
+    "Department" character varying(50) NOT NULL,
+    PRIMARY KEY ("UserId")
+);
+
+CREATE TABLE public."User"
+(
+    "Id" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999999999 CACHE 999999999 ),
+    "ActivatedId" integer NOT NULL,
+    "Email" character varying(50) NOT NULL,
+    "Password" character varying(128) NOT NULL,
+    "PasswordVerify" character varying(128) NOT NULL,
+    PRIMARY KEY ("Id")
+);
+
+ALTER TABLE public."Activation"
+    ADD FOREIGN KEY ("UserId")
+    REFERENCES public."User" ("Id")
+    NOT VALID;
+
+
+ALTER TABLE public."Employer"
+    ADD FOREIGN KEY ("Email")
+    REFERENCES public."User" ("Email")
+    NOT VALID;
+
+
+ALTER TABLE public."Employer"
+    ADD FOREIGN KEY ("UserId")
+    REFERENCES public."User" ("Id")
+    NOT VALID;
+
+
+ALTER TABLE public."JobSeeker"
+    ADD FOREIGN KEY ("UserId")
+    REFERENCES public."User" ("Id")
+    NOT VALID;
+
+
+ALTER TABLE public."SystemPersonel"
+    ADD FOREIGN KEY ("UserId")
+    REFERENCES public."User" ("Id")
+    NOT VALID;
+
+
+ALTER TABLE public."User"
+    ADD FOREIGN KEY ("ActivatedId")
+    REFERENCES public."Activation" ("Id")
+    NOT VALID;
+
+END;
