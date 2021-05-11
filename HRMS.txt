@@ -38,11 +38,12 @@ CREATE TABLE public."JobSeeker"
 
 CREATE TABLE public."SystemPersonel"
 (
+    "Id" integer NOT NULL,
     "UserId" integer NOT NULL,
     "FirsName" character varying(50) NOT NULL,
     "LastName" character varying(50) NOT NULL,
     "Department" character varying(50) NOT NULL,
-    PRIMARY KEY ("UserId")
+    PRIMARY KEY ("Id")
 );
 
 CREATE TABLE public."User"
@@ -89,5 +90,8 @@ ALTER TABLE public."User"
     ADD FOREIGN KEY ("ActivatedId")
     REFERENCES public."Activation" ("Id")
     NOT VALID;
+	
+ALTER TABLE public."Employer"
+	ADD CONSTRAINT CheckEmail CHECK (Employer.WebSite SIMILAR TO Employer.Email)
 
 END;
