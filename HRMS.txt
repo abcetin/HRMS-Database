@@ -90,4 +90,3 @@ ALTER TABLE public."SystemPersonel"
     ADD FOREIGN KEY ("UserId")
     REFERENCES public."User" ("Id")
     NOT VALID;
-
