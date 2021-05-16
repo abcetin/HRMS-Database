@@ -4,17 +4,21 @@ CREATE TABLE public."Activation"
     "Id" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999999999 CACHE 999999999 ),
     "UserId" integer NOT NULL,
     "Activated" boolean NOT NULL,
-	CONSTRAINT "Id" UNIQUE ("Id")
+    CONSTRAINT "Activation_pkey" PRIMARY KEY ("Id"),
+    CONSTRAINT "UserId" FOREIGN KEY ("UserId")
 );
 
 CREATE TABLE public."Employer"
 (
+    "Id" integer not null,
     "UserId" integer NOT NULL,
     "CompanyName" character varying(50) COLLATE pg_catalog."default",
     "WebSite" character varying(50) COLLATE pg_catalog."default",
     "Email" character varying(50) COLLATE pg_catalog."default",
     "PhoneNumber" character varying(50) COLLATE pg_catalog."default",
-	  CONSTRAINT emailcheck CHECK ("WebSite"::text ~ similar_to_escape("Email"::text))
+	CONSTRAINT emailcheck CHECK ("WebSite"::text ~ similar_to_escape("Email"::text)),
+    CONSTRAINT "Employer_pkey" PRIMARY KEY ("Id"),
+    CONSTRAINT "Email" FOREIGN KEY ("Email")
 );
 
 CREATE TABLE public."JobPosition"
@@ -30,7 +34,10 @@ CREATE TABLE public."JobSeeker"
     "FirstName" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "LastName" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "NationalityId" character varying(11) COLLATE pg_catalog."default" NOT NULL,
-    "DateOfBirth" date NOT NULL
+    "DateOfBirth" date NOT NULL,
+    CONSTRAINT "JobSeeker_pkey" PRIMARY KEY ("Id"),
+    CONSTRAINT "NationalityId" UNIQUE ("NationalityId"),
+    CONSTRAINT "UserId" FOREIGN KEY ("UserId")
     
 );
 
@@ -40,7 +47,9 @@ CREATE TABLE public."SystemPersonel"
     "UserId" integer NOT NULL,
     "FirsName" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "LastName" character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    "Department" character varying(50) COLLATE pg_catalog."default" NOT NULL
+    "Department" character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "SystemPersonel_pkey" PRIMARY KEY ("Id"),
+    CONSTRAINT "UserId" FOREIGN KEY ("UserId")
    
 );
 
@@ -51,7 +60,7 @@ CREATE TABLE public."User"
     "Email" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "Password" character varying(128) COLLATE pg_catalog."default" NOT NULL,
     "PasswordVerify" character varying(128) COLLATE pg_catalog."default" NOT NULL,
-	 CONSTRAINT "User_pkey" PRIMARY KEY ("Id"),
+	CONSTRAINT "User_pkey" PRIMARY KEY ("Id"),
     CONSTRAINT "ActivatedId" UNIQUE ("ActivatedId"),
     CONSTRAINT "Email" UNIQUE ("Email")
    
