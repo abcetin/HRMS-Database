@@ -30,7 +30,7 @@ CREATE TABLE public."JobSeeker"
     "FirstName" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "LastName" character varying(50) COLLATE pg_catalog."default" NOT NULL,
     "NationalityId" character varying(11) COLLATE pg_catalog."default" NOT NULL,
-    "DateOfBird" date NOT NULL
+    "DateOfBirth" date NOT NULL
     
 );
 
